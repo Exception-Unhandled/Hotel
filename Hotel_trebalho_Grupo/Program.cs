@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 
 int op = 1;
@@ -12,33 +13,35 @@ for (int i = 0; i < res.Length; i++)
 
 Random rnd = new Random();
 
-string[] nomes = ["Laura", "Samara", "Ana", "Rodrigo", "Herbert"];
-string[] apelidos = ["Faro", "Soares", "Silva"];
-
-int nindex = rnd.Next(nomes.Length);
-res[0].nome = nomes[nindex--];
-
-//Inicio
+string[] nomes = ["Laura", "Samara", "Ana", "Rodrigo", "Herbert", "Maria", "Carolina"];
+string[] apelidos = ["Faro", "Soares", "Silva", "Albuquerque", "Hernandes", "Marim", "Costa"];
 
 
+//Inicio---------------------------------------------------------------------------------------------------
+
+Console.ForegroundColor = ConsoleColor.Green;
 Console.WriteLine("--------------------------------------");
 Console.WriteLine("--------------------------------------");
 Console.WriteLine("           TP 1 - modulo 7            ");
 Console.WriteLine("          Gestão de Reservas          ");
 Console.WriteLine("--------------------------------------");
 Console.WriteLine("--------------------------------------");
+Console.ForegroundColor = ConsoleColor.White;
 Console.WriteLine("(Pressione ENTER para entrar no programa!)");
 Console.ReadLine();
 
 while ( op != 0 )
 {
     Console.Clear();
-
+    Console.ForegroundColor = ConsoleColor.Blue;
     Console.WriteLine("--------------------------------------");
     Console.WriteLine("--------------------------------------");
+    Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("         Bem-vindo ao Hotel!          ");
     Console.WriteLine("         O que deseja fazer?          ");
+    Console.ForegroundColor = ConsoleColor.Blue;
     Console.WriteLine("--------------------------------------");
+    Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine(" 1- Carregar reserva                  ");
     Console.WriteLine(" 2- Inserir nova reserva              ");
     Console.WriteLine(" 3- Pesquisar reservas                ");
@@ -49,24 +52,31 @@ while ( op != 0 )
     Console.WriteLine(" 8- Nº de reservas livres             ");
     Console.WriteLine(" 9- Mostrar preços de quarto          ");
     Console.WriteLine(" 0- Sair                              ");
+    Console.ForegroundColor = ConsoleColor.Blue;
     Console.WriteLine("--------------------------------------");
     Console.WriteLine("--------------------------------------");
+    Console.ForegroundColor = ConsoleColor.White;
 
 
     Console.WriteLine("Introduza a opção");
     op = Convert.ToInt32(Console.ReadLine());
 
-    // Carregar reserva
+    // Carregar reserva---------------------------------------------------------------------------------------------------
 
-    if( op == 1)
+    if ( op == 1)
     {
-
+        VMenu();
     }
 
-    // Inserir nova reserva
+    // Inserir nova reserva---------------------------------------------------------------------------------------------------
 
     if (op == 2)
     {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+
         int disp = checkV(res);
         if( disp != -1  )
         {
@@ -87,44 +97,68 @@ while ( op != 0 )
 
             Console.WriteLine("Introduza o preço do quarto:");
             res[disp].preco = Convert.ToDouble(Console.ReadLine());
-           
+
+            Console.WriteLine("Reserva criada com sucesso!");
+
         }
         else
             Console.WriteLine("Não existem reservas disponíveis! (Limpe alguma reserva para armazenar uma nova)");
 
-        Console.WriteLine("Reserva criada com sucesso! \n \r(Pressione ENTER para voltar ao menu)");
-        Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+
+        VMenu();
 
     }
 
-    // Pesquisar reserva
+    // Pesquisar reserva---------------------------------------------------------------------------------------------------
 
     if ( op == 3)
     {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("Deseja ver as reservas disponíveis ou pesquisar por número do quarto?");
-        Console.WriteLine("1 - Ver reservas disponíveis");
-        Console.WriteLine("2 - Pesquisar por número de quarto");
+        Console.WriteLine(" 1 - Ver reservas disponíveis");
+        Console.WriteLine(" 2 - Pesquisar por número de quarto");
+        Console.ForegroundColor = ConsoleColor.White;
         op = Convert.ToInt16(Console.ReadLine());
+
+        // Ver reservas disponíveis
 
         if (op == 1)
         {
+            bool disp = false;
             Console.WriteLine("Reservas disponíveis:");
 
             for (int i = 0; i < res.Length; i++)
             {
                 if (res[i].Nquarto != 0)
+                {
                     Console.Write($" {res[i].Nquarto} ");
+                    disp = true;
+                }
 
             }
-            Console.WriteLine();
-            Console.WriteLine("Introduza o número do quarto que quer saber as informações:");
-            int quarto = Convert.ToInt32(Console.ReadLine());
-            for (int i = 0; i < res.Length; i++)
+            if (disp == true)
             {
-                if (quarto == res[i].Nquarto)
-                    Dados(res[i]);
+                Console.WriteLine();
+                Console.WriteLine("Introduza o número do quarto que quer saber as informações:");
+                int quarto = Convert.ToInt32(Console.ReadLine());
+                for (int i = 0; i < res.Length; i++)
+                {
+                    if (quarto == res[i].Nquarto)
+                        Dados(res[i]);
+                }
             }
+            else
+                Console.WriteLine("Não existem reservas criadas!");
         }
+
+        // Pesquisar por número de quarto
+
         else if (op == 2)
         {
             Console.WriteLine("Introduza o número do quarto que quer saber as informações:");
@@ -140,14 +174,21 @@ while ( op != 0 )
         else
             Console.WriteLine("Operação inválida");
 
-        Console.WriteLine("(Pressione ENTER para voltar ao menu)");
-        Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        VMenu();
     }
 
-    // Mostrar todas as reservas
+    // Mostrar todas as reservas---------------------------------------------------------------------------------------------------
 
-    if( op == 4)
+    if ( op == 4)
     {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("Reservas preenchidas:");
         bool disp = false;
 
         for (int i = 0; i < res.Length; i++)
@@ -165,19 +206,26 @@ while ( op != 0 )
             Console.WriteLine("Ainda não existem reservas preenchidas!");
         }
 
-        Console.WriteLine("(Pressione ENTER para voltar ao menu)");
-        Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        VMenu();
     }
 
-    // Alterar dados da reserva
+    // Alterar dados da reserva---------------------------------------------------------------------------------------------------
 
     if(op == 5)
     {
-
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("Deseja alterar de acordo com as reservas disponíveis ou pesquisar por número do quarto?");
         Console.WriteLine("1 - Ver reservas disponíveis");
         Console.WriteLine("2 - Pesquisar por número de quarto");
         op = Convert.ToInt16(Console.ReadLine());
+
+        //Reservas disponíveis
 
         if (op == 1)
         {
@@ -187,9 +235,11 @@ while ( op != 0 )
 
             for (int i = 0; i < res.Length; i++)
             {
-                disp = true;
                 if (res[i].Nquarto != 0)
+                {
                     Console.Write($"{res[i].Nquarto} ");
+                    disp = true;
+                }
             }
 
             if (disp == false)
@@ -202,8 +252,6 @@ while ( op != 0 )
                 Console.WriteLine("Introduza o número do quarto que quer alterar a reserva: ");
                 int quarto = Convert.ToInt32(Console.ReadLine());
 
-                for (int i = 0; i < res.Length; i++)
-                {
                     int index = pesquisa(res, quarto);
 
                     if (index != -1)
@@ -215,21 +263,26 @@ while ( op != 0 )
                         Console.WriteLine("Introduza um novo apelido");
                         res[index].apelido = Console.ReadLine();
 
+                        Console.WriteLine("Introduza um novo número de quarto");
+                        res[index].Nquarto = Convert.ToInt32(Console.ReadLine());
+
                         Console.WriteLine("Introduza um novo número de telemovel");
                         res[index].nTele = Convert.ToInt32(Console.ReadLine());
 
                         Console.WriteLine("Introduza uma nova quantidade de pessoas");
                         res[index].Npessoa = Convert.ToInt32(Console.ReadLine());
-                    }
+
+                        Console.WriteLine("Introduza um novo preço");
+                        res[index].preco = Convert.ToDouble(Console.ReadLine());
                 }
 
                 if (disp == false)
                     Console.WriteLine("A reserva com este numero não existe");
-
-                Console.WriteLine("(Pressione ENTER para voltar ao menu)");
-                Console.ReadLine();
             }
         }
+
+        //Pesquisar por número de reserva
+
 
         else if (op == 2)
         {
@@ -244,11 +297,17 @@ while ( op != 0 )
                 Console.WriteLine("Introduza um novo apelido");
                 res[index].apelido = Console.ReadLine();
 
+                Console.WriteLine("Introduza um novo número de quarto");
+                res[index].Nquarto = Convert.ToInt32(Console.ReadLine());
+
                 Console.WriteLine("Introduza um novo número de telemovel");
                 res[index].nTele = Convert.ToInt32(Console.ReadLine());
 
                 Console.WriteLine("Introduza uma nova quantidade de pessoas");
                 res[index].Npessoa = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Introduza um novo preço");
+                res[index].preco = Convert.ToDouble(Console.ReadLine());
             }
             else
                 Console.WriteLine("A reserva com este numero não existe");
@@ -257,28 +316,62 @@ while ( op != 0 )
         else
             Console.WriteLine("Operação inválida");
 
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        VMenu();
+
     }
 
-    // Exportar reservas
+    // Exportar reservas---------------------------------------------------------------------------------------------------
 
     if (op == 6)
     {
 
     }
 
-    // Gerar reserva
+    // Gerar reserva---------------------------------------------------------------------------------------------------
 
-    if(op ==7)
+    if (op ==7)
     {
+        int disp = checkV(res);
+        if (disp != -1)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("--------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Reserva gerada:");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("--------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
 
+            int c = rnd.Next(nomes.Length);
+            res[disp].nome = nomes[c];
+            c = rnd.Next(apelidos.Length);
+            res[disp].apelido = apelidos[c];
+            res[disp].Nquarto = rnd.Next(200, 501);
+            res[disp].nTele = rnd.Next(900000000, 1000000000);
+            res[disp].Npessoa = rnd.Next(1, 5);
+            res[disp].preco = 0;
+            Dados(res[disp]);
+        }
+        else
+            Console.WriteLine("Não é possível gerar uma reserva!\n\r(Reservas cheias)");
 
-        Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        VMenu();
     }
 
-    // Reservas disponíveis
+    // Reservas disponíveis---------------------------------------------------------------------------------------------------
 
     if (op == 8)
     {
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
         int contar = 0;
         for (int i = 0;i < res.Length;i++)
         {
@@ -288,11 +381,20 @@ while ( op != 0 )
             }
         }
         Console.WriteLine($"Existem {contar} reservas disponíveis ");
-        Console.WriteLine("(Pressione ENTER para voltar ao menu)");
-        Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        VMenu();
     }
 
-    //Sair
+    // Preços de quarto---------------------------------------------------------------------------------------------------
+
+    if (op == 9)
+    {
+
+    }
+
+    //Sair---------------------------------------------------------------------------------------------------
 
     if (op == 0)
     {
@@ -301,10 +403,14 @@ while ( op != 0 )
         while (valido == false)
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("--------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("          Deseja mesmo sair?          ");
             Console.WriteLine(" 1 - Sim \n \r 2 - Não");
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("--------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
             op = Convert.ToInt32(Console.ReadLine());
 
             if (op == 1)
@@ -320,16 +426,23 @@ while ( op != 0 )
         }
     }
 
-    if (op != 0 && op != 1 && op != 2 && op != 3 && op != 4 && op != 5 && op != 6 && op != 7 && op != 8)
+    //Opção inválida---------------------------------------------------------------------------------------------------
+
+    if (op != 0 && op != 1 && op != 2 && op != 3 && op != 4 && op != 5 && op != 6 && op != 7 && op != 8 && op != 9)
     {
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Opção inválida!");
+        Console.ForegroundColor = ConsoleColor.Gray;
         Console.WriteLine("(Pressione ENTER para voltar a tentar)");
         Console.ReadLine();
     }
 
 }
 
-//--------------------------------------------------
+//---------------------------------------------------------------------------------------------------
+//                                            Funções
+//---------------------------------------------------------------------------------------------------
+
 static int pesquisa(reserva[] a, int n)
 {
     for (int i = 0; i < a.Length; i++)
@@ -341,6 +454,15 @@ static int pesquisa(reserva[] a, int n)
         
     }
     return -1;
+}
+
+static void VMenu()
+{
+    Console.ForegroundColor = ConsoleColor.Gray;
+    Console.WriteLine("(Pressione ENTER para voltar ao menu!)");
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.ReadLine();
+    return;
 }
 
 static void Dados(reserva a)
@@ -368,6 +490,11 @@ static int checkV(reserva[] a)
     }
     return -1;
 }
+
+//---------------------------------------------------------------------------------------------------
+//                                             Struct
+//---------------------------------------------------------------------------------------------------
+
 public struct reserva
 {
     public string nome { get; set; }
