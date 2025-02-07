@@ -448,11 +448,10 @@ while ( op != 0 )
         for (int i = 0; i < res.Length; i++)
         {
             if (res[i].Nquarto != 0)
-            {
-                disp = true;
-                Dados(res[i]);
-                Console.WriteLine();
-            }
+            Console.WriteLine($"{res[i].Nquarto}");
+
+
+
         }
 
         if (disp == false)
@@ -471,7 +470,7 @@ while ( op != 0 )
                     res[i].apelido = string.Empty;
                     res[i].nTele = 0;
                     res[i].preco = 0;
-                    res[i].preco = 0;
+                    res[i].Npessoa = 0;
                     res[i].Nquarto = 0;
                 }
             }
@@ -615,3 +614,8 @@ public struct reserva
 
     }
 }
+
+
+
+//ordenar quartos com vetor e struct aula de segunda!!!!!!!
+lembrar
