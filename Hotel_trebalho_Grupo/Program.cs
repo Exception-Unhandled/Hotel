@@ -50,7 +50,8 @@ while ( op != 0 )
     Console.WriteLine(" 6- Exportar reservas                 ");
     Console.WriteLine(" 7- Gerar reserva                     ");
     Console.WriteLine(" 8- Nº de reservas livres             ");
-    Console.WriteLine(" 9- Mostrar preços de quarto          ");
+    Console.WriteLine(" 9- Consultar preços de quarto        ");
+    Console.WriteLine(" 10- Limpar reserva                   ");
     Console.WriteLine(" 0- Sair                              ");
     Console.ForegroundColor = ConsoleColor.Blue;
     Console.WriteLine("--------------------------------------");
@@ -90,10 +91,30 @@ while ( op != 0 )
             res[disp].nTele = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("Introduza o numero do quarto:");
-            res[disp].Nquarto=Convert.ToInt32(Console.ReadLine());
+            res[disp].Nquarto = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("Introduza o numero de pessoas que vão utilizar o quarto:");
-            res[disp].Npessoa= Convert.ToInt32(Console.ReadLine());
+            res[disp].Npessoa = Convert.ToInt32(Console.ReadLine());
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("--------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("              Preço de quertos variados:          ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("--------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" Quarto simples de solteiro --------- 150 Euros !");
+            Console.WriteLine(" Quarto grande de solteiro ---------- 150 Euros !");
+            Console.WriteLine(" Quarto simples de casal ------------ 150 Euros !");
+            Console.WriteLine(" Quarto grande de casal ------------- 200 Euros !");
+            Console.WriteLine(" suíte simples de casal ------------- 250 Euros !");
+            Console.WriteLine(" suíte grande de casal -------------- 350 Euros !");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("--------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("--------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
 
             Console.WriteLine("Introduza o preço do quarto:");
             res[disp].preco = Convert.ToDouble(Console.ReadLine());
@@ -211,7 +232,7 @@ while ( op != 0 )
         Console.ForegroundColor = ConsoleColor.White;
         VMenu();
     }
-
+    
     // Alterar dados da reserva---------------------------------------------------------------------------------------------------
 
     if(op == 5)
@@ -391,6 +412,75 @@ while ( op != 0 )
 
     if (op == 9)
     {
+       
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------------------");
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("              Preço de quertos variados:          ");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine(" Quarto simples de solteiro --------- 150 Euros !");
+        Console.WriteLine(" Quarto grande de solteiro ---------- 150 Euros !");
+        Console.WriteLine(" Quarto simples de casal ------------ 150 Euros !");
+        Console.WriteLine(" Quarto grande de casal ------------- 200 Euros !");
+        Console.WriteLine(" suíte simples de casal ------------- 250 Euros !");
+        Console.WriteLine(" suíte grande de casal -------------- 350 Euros !");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+
+        VMenu();
+    }
+    // Limpar reserva-------------------------------------------------------------------------------------------------
+    if(op == 10)
+    {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("Reservas preenchidas:");
+        bool disp = false;
+
+        for (int i = 0; i < res.Length; i++)
+        {
+            if (res[i].Nquarto != 0)
+            {
+                disp = true;
+                Dados(res[i]);
+                Console.WriteLine();
+            }
+        }
+
+        if (disp == false)
+        {
+            Console.WriteLine("Ainda não existem reservas preenchidas!");
+        }
+        else 
+        {
+            Console.WriteLine(" Introduza o numero do quarto de reserva que deseja limpar :");
+            int rsLimpar = Convert.ToInt32(Console.ReadLine());
+            for (int i = 0;i < res.Length; i++)
+            {
+                if (res[i].Nquarto == rsLimpar)
+                {
+                    res[i].nome = string.Empty;
+                    res[i].apelido = string.Empty;
+                    res[i].nTele = 0;
+                    res[i].preco = 0;
+                    res[i].preco = 0;
+                    res[i].Nquarto = 0;
+                }
+            }
+        }
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("--------------------------------------");
+        Console.ForegroundColor = ConsoleColor.White;
+        VMenu();
+        
 
     }
 
