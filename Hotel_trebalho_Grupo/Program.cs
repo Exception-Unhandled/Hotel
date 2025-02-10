@@ -13,20 +13,21 @@ for (int i = 0; i < res.Length; i++)
 
 Random rnd = new Random();
 
-string[] nomes = ["Laura", "Samara", "Ana", "Rodrigo", "Herbert", "Maria", "Carolina"];
-string[] apelidos = ["Faro", "Soares", "Silva", "Albuquerque", "Hernandes", "Marim", "Costa"];
+string[] nomes = ["Laura", "Samara", "Ana", "Rodrigo", "Herbert", "Maria", "Carolina", "João","Marcos"];
+string[] apelidos = ["Faro", "Soares", "Silva", "Albuquerque", "Hernandes", "Marim", "Costa",];
 
 
 //Inicio---------------------------------------------------------------------------------------------------
 
-Console.ForegroundColor = ConsoleColor.Green;
-Console.WriteLine("--------------------------------------");
-Console.WriteLine("--------------------------------------");
-Console.WriteLine("           TP 1 - modulo 7            ");
-Console.WriteLine("          Gestão de Reservas          ");
-Console.WriteLine("--------------------------------------");
-Console.WriteLine("--------------------------------------");
-Console.ForegroundColor = ConsoleColor.White;
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("-----------------------------------------------------");
+Console.WriteLine("-----------------------------------------------------");
+Console.WriteLine("                   TP 1 - Módulo 7                   ");
+Console.WriteLine("                 Gestão de Reservas                  ");
+Console.WriteLine("    Herbert Júnior - n7 / Micaela Albuquerque n12    ");
+Console.WriteLine("-----------------------------------------------------");
+Console.WriteLine("-----------------------------------------------------");
+Console.ForegroundColor = ConsoleColor.Gray;
 Console.WriteLine("(Pressione ENTER para entrar no programa!)");
 Console.ReadLine();
 
@@ -293,6 +294,41 @@ while ( op != 0 )
 
                 if (index != -1)
                 {
+                    Dados(res[index]);
+                    Console.WriteLine();
+                    Console.WriteLine("O que deseja alterar?");
+                    Console.WriteLine("1 - Nome/Apelido");
+                    Console.WriteLine("2 - Número de quarto");
+                    Console.WriteLine("3 - Número de telemóvel");
+                    Console.WriteLine("4 - Quantidade de pessoas");
+                    Console.WriteLine("5 - Preço");
+                    int opc = Convert.ToInt32(Console.ReadLine());
+
+                    if (op == 1)
+                    {
+                        Console.WriteLine("Introduza o novo nome da reserva");
+                        res[index].nome = Console.ReadLine();
+                        Console.WriteLine("Introduza o novo apelidado da reserva");
+                        res[index].apelido = Console.ReadLine();
+
+                    }
+                    if(op == 2)
+                    {
+                        Console.WriteLine("Introduza o nomero de quarto da reserva");
+                        int novoquart = Convert.ToInt32(Console.ReadLine());
+
+                        int varConfirme = 1 ;
+                        for (int i = 0;i < res.Length;i++)
+                        {
+                            if ( novoquart == res[i].Nquarto)
+                            {
+                                varConfirme = 0;  
+                            }
+                        }
+                        
+                        continuar
+                    }
+
                     Console.WriteLine("Introduza um novo nome");
                     res[index].nome = Console.ReadLine();
 
@@ -353,7 +389,6 @@ while ( op != 0 )
                 Console.WriteLine("A reserva com este numero não existe");
             }
         }
-
         else
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -490,7 +525,7 @@ while ( op != 0 )
 
             int index = pesquisa(res, rsLimpar);
 
-            if (index != -1) //Aq eu só fiz a validação com a função de pesquisa p ficar mais fácil de saber se o utilizador colocou um número q n existe*
+            if (index != -1) 
             {
                 res[index].nome = string.Empty;
                 res[index].apelido = string.Empty;
