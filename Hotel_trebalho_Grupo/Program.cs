@@ -109,7 +109,7 @@ while ( op != 0 )
                     quarto listas = new quarto(Convert.ToInt32(word[0]), word[1], Convert.ToInt32(word[2]));
                     lista.Add(listas);
 
-                    listas.();
+                    //listas.();
                 }
                 //Console.WriteLine("Introduza o nome do arquivo\n\r(ATENÇÃO: Não inclua o formato do arquivo)");
                 //StreamReader reader = new StreamReader(Console.ReadLine() + ".txt");
@@ -488,7 +488,6 @@ while ( op != 0 )
                     Console.ReadLine();
                     goto Menu;
                 }
-                aaaaaaaaa
 
                 int index = pesquisa(res, quarto);
 
