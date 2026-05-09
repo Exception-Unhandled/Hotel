@@ -5,3 +5,4 @@ It features a reservation manager of a hotel, allowing the user to import reserv
 
 <br>Still, if you *are* interested on taking a look on my first project using github, feel free to explore. <br>
 The original project was made in portuguese, the english version is available on the 'english_ver' branch.
+This project uses .NET 8.0
