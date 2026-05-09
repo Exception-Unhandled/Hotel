@@ -5,22 +5,22 @@ using Hotel_trebalho_Grupo;
 
 int op = 1;
 
-reserva[] res = new reserva[100];
+reserva[] reservas = new reserva[100];
 
 
 
-for (int i = 0; i < res.Length; i++)
+for (int i = 0; i < reservas.Length; i++)
 {
-    res[i] = new reserva();
+    reservas[i] = new reserva();
 }
 
 Random rnd = new Random();
 
- List<quarto> lista = new List<quarto>();
+List<quarto> lista = new List<quarto>();
 string caminho = "quartos.txt";
 
-string[] nomes = ["Laura", "Samara", "Ana", "Rodrigo", "Herbert", "Maria", "Carolina", "João", "Marcos", "Otávio", "César", "Micaela","Cláudia"];
-string[] apelidos = ["Faro", "Soares", "Silva", "Albuquerque", "Hernandes", "Marim", "Costa", "Alves", "Souza", "Pereira", "Oliveira","Vilarouca","Queiroz"];
+string[] nomes = ["Laura", "Samara", "Ana", "Rodrigo", "Herbert", "Maria", "Carolina", "João", "Marcos", "Otávio", "César", "Micaela", "Cláudia"];
+string[] apelidos = ["Faro", "Soares", "Silva", "Albuquerque", "Hernandes", "Marim", "Costa", "Alves", "Souza", "Pereira", "Oliveira", "Vilarouca", "Queiroz"];
 int[] precos = [115, 150, 165, 200, 250, 350];
 
 
@@ -40,7 +40,7 @@ Console.ForegroundColor = ConsoleColor.Gray;
 Console.WriteLine("(Pressione ENTER para entrar no programa!)");
 Console.ReadLine();
 
-while ( op != 0 )
+while (op != 0)
 {
 
     Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -74,10 +74,10 @@ while ( op != 0 )
 
     Console.WriteLine("Introduza a opção");
     op = Convert.ToInt32(Console.ReadLine());
-    
+
     // Importar reserva---------------------------------------------------------------------------------------------------
 
-    if ( op == 1)
+    if (op == 1)
     {
 
         Console.Clear();
@@ -96,48 +96,45 @@ while ( op != 0 )
         {
         inicioImportar1:
             try
-            { 
-                if (!File.Exists(caminho))
+            {
+                Console.WriteLine("Introduza o nome do arquivo\r\n(ATENÇÃO: Não inclua o formato do arquivo)");
+
+                caminho = Console.ReadLine() + ".txt";
+                Console.WriteLine("A procurar em: " + Path.GetFullPath(caminho));
+
+                StreamReader reader = new StreamReader(caminho);
+
+                Array.Clear(reservas);
+
+                for (int i = 0; i < reservas.Length; i++)
                 {
-                    Console.WriteLine($"ERRO: O ficheiro de carregamento de quarto não existe");
+                    reservas[i] = new reserva();
                 }
-                StreamReader streamReader = new StreamReader(caminho);
-                string line;
-                while((line = streamReader.ReadLine()) != null)
+
+                int c = Convert.ToInt16(reader.ReadLine());
+
+                for (int i = 0; i < c; i++)
                 {
-                    string[] word = line.Split(' ');
-                    quarto listas = new quarto(Convert.ToInt32(word[0]), word[1], Convert.ToInt32(word[2]));
-                    lista.Add(listas);
-
-                    //listas.();
+                    Import(ref reservas[i], reader); //Porque ref? - ref é o comando que indica que você quer alocar os valores da função num 'ponteiro' (ou seja, coordenada) da memória específic. Ou seja, quer alocar seus dados no seu vetor original, e não numa cópia
+                    Dados(reservas[i]);
                 }
-                //Console.WriteLine("Introduza o nome do arquivo\n\r(ATENÇÃO: Não inclua o formato do arquivo)");
-                //StreamReader reader = new StreamReader(Console.ReadLine() + ".txt");
-                //Array.Clear(res);
 
-                //Console.Clear();
-                //Console.ForegroundColor = ConsoleColor.Blue;
-                //Console.WriteLine("--------------------------------------");
-                //Console.ForegroundColor = ConsoleColor.White;
-                //Console.WriteLine("           Reservas importadas        ");
-                //Console.ForegroundColor = ConsoleColor.Blue;
-                //Console.WriteLine("--------------------------------------");
-                //Console.ForegroundColor = ConsoleColor.White;
+                reader.Close();
 
-                //int c = Convert.ToInt16(reader.ReadLine());
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("--------------------------------------");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("           Reservas importadas        ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("--------------------------------------");
+                Console.ForegroundColor = ConsoleColor.White;
 
-                //for (int i = 0; i < c; i++)
-                //{
-                //    Import(ref res[i], reader); //Porque ref? - ref é o comando que indica que você quer alocar os valores da função num 'ponteiro' (ou seja, coordenada) da memória específic. Ou seja, quer alocar seus dados no seu vetor original, e não numa cópia
-                //    Dados(res[i]);
-                //}
-
-                //reader.Close();
             }
             catch (FileNotFoundException)
             {
                 Console.WriteLine("ERRO: O ficheiro não foi encontrado, verifique se o ficheiro tem o nome certo ou encontra-se no ficheiro bin");
-                goto inicioImportar1;
+                goto Menu;
             }
             catch (FormatException)
             {
@@ -145,7 +142,7 @@ while ( op != 0 )
                 Console.ReadLine();
                 goto inicioImportar1;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("ERRO: Um erro ocorreu no execução do programa. Voltando ao menu");
                 Console.ReadLine();
@@ -158,7 +155,7 @@ while ( op != 0 )
 
     if (op == 2)
     {
-        novares1:
+    novares1:
         try
         {
             Console.Clear();
@@ -166,24 +163,24 @@ while ( op != 0 )
             Console.WriteLine("--------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
 
-            int disp = checkV(res);
+            int disp = checkV(reservas);
             if (disp != -1)
             {
 
                 Console.WriteLine("Introduza o nome da reserva:");
-                res[disp].nome = Console.ReadLine();
+                reservas[disp].nome = Console.ReadLine();
 
-                Console.WriteLine($"Introduza o apelido de {res[disp].nome}: ");
-                res[disp].apelido = Console.ReadLine();
+                Console.WriteLine($"Introduza o apelido de {reservas[disp].nome}: ");
+                reservas[disp].apelido = Console.ReadLine();
 
                 Console.WriteLine("Introduza o número de telemóvel:");
-                res[disp].nTele = Convert.ToInt32(Console.ReadLine());
+                reservas[disp].nTele = Convert.ToInt32(Console.ReadLine());
 
                 Console.WriteLine("Introduza o numero do quarto:");
-                res[disp].Nquarto = Convert.ToInt32(Console.ReadLine());
+                reservas[disp].Nquarto = Convert.ToInt32(Console.ReadLine());
 
                 Console.WriteLine("Introduza o numero de pessoas que vão utilizar o quarto:");
-                res[disp].Npessoa = Convert.ToInt32(Console.ReadLine());
+                reservas[disp].Npessoa = Convert.ToInt32(Console.ReadLine());
 
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("--------------------------------------------------");
@@ -206,7 +203,7 @@ while ( op != 0 )
                 Console.ForegroundColor = ConsoleColor.White;
 
                 Console.WriteLine("Introduza o preço do quarto:");
-                res[disp].preco = Convert.ToDouble(Console.ReadLine());
+                reservas[disp].preco = Convert.ToDouble(Console.ReadLine());
 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Reserva criada com sucesso!");
@@ -241,9 +238,9 @@ while ( op != 0 )
 
     // Pesquisar reserva---------------------------------------------------------------------------------------------------
 
-    if ( op == 3)
+    if (op == 3)
     {
-            pesquisa1:
+    pesquisa1:
         try
         {
             Console.Clear();
@@ -264,12 +261,12 @@ while ( op != 0 )
                 bool disp = false;
                 Console.WriteLine("Reservas disponíveis:");
 
-                for (int i = 0; i < res.Length; i++)
+                for (int i = 0; i < reservas.Length; i++)
                 {
-                    if (res[i].Nquarto != 0)
+                    if (reservas[i].Nquarto != 0)
                     {
 
-                        Console.Write($"|| {res[i].Nquarto} ");
+                        Console.Write($"|| {reservas[i].Nquarto} ");
                         disp = true;
 
                     }
@@ -280,10 +277,10 @@ while ( op != 0 )
                     Console.WriteLine();
                     Console.WriteLine("Introduza o número do quarto que quer saber as informações:");
                     int quarto = Convert.ToInt32(Console.ReadLine());
-                    for (int i = 0; i < res.Length; i++)
+                    for (int i = 0; i < reservas.Length; i++)
                     {
-                        if (quarto == res[i].Nquarto)
-                            Dados(res[i]);
+                        if (quarto == reservas[i].Nquarto)
+                            Dados(reservas[i]);
                     }
                 }
                 else
@@ -299,10 +296,10 @@ while ( op != 0 )
             {
                 Console.WriteLine("Introduza o número do quarto que quer saber as informações:");
                 int n = Convert.ToInt32(Console.ReadLine());
-                int index = pesquisa(res, n);
+                int index = pesquisa(reservas, n);
                 if (index != -1)
                 {
-                    Dados(res[index]);
+                    Dados(reservas[index]);
                 }
                 else
                 {
@@ -337,9 +334,9 @@ while ( op != 0 )
 
     // Mostrar todas as reservas---------------------------------------------------------------------------------------------------
 
-    if ( op == 4)
+    if (op == 4)
     {
-        mostraRes:
+    mostraRes:
         try
         {
             Console.Clear();
@@ -349,13 +346,13 @@ while ( op != 0 )
             Console.WriteLine("Reservas preenchidas:");
             bool disp = false;
 
-            for (int i = 0; i < res.Length; i++)
+            for (int i = 0; i < reservas.Length; i++)
             {
-                if (res[i].Nquarto != 0)
+                if (reservas[i].Nquarto != 0)
                 {
 
                     disp = true;
-                    Dados(res[i]);
+                    Dados(reservas[i]);
                     Console.WriteLine();
 
                 }
@@ -392,7 +389,7 @@ while ( op != 0 )
 
     if (op == 5)
     {
-        InicioAlterar:
+    InicioAlterar:
         int opescolha;
         try
         {
@@ -423,9 +420,9 @@ while ( op != 0 )
         {
             bool disp = false;
 
-            for (int i = 0; i < res.Length; i++)
+            for (int i = 0; i < reservas.Length; i++)
             {
-                if (res[i].Nquarto != 0)
+                if (reservas[i].Nquarto != 0)
                 {
                     disp = true;
                 }
@@ -448,12 +445,12 @@ while ( op != 0 )
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("            Reservas disponíveis:");
                 Console.WriteLine();
-                for (int i = 0; i < res.Length; i++)
+                for (int i = 0; i < reservas.Length; i++)
                 {
-                    if (res[i].Nquarto != 0)
+                    if (reservas[i].Nquarto != 0)
                     {
 
-                        Console.Write($"|| {res[i].Nquarto}");
+                        Console.Write($"|| {reservas[i].Nquarto}");
 
                     }
                 }
@@ -489,12 +486,12 @@ while ( op != 0 )
                     goto Menu;
                 }
 
-                int index = pesquisa(res, quarto);
+                int index = pesquisa(reservas, quarto);
 
                 if (index != -1)
                 {
                     Console.Clear();
-                    Dados(res[index]);
+                    Dados(reservas[index]);
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("-------------------------------");
@@ -517,9 +514,9 @@ while ( op != 0 )
                     {
 
                         Console.WriteLine("Introduza o novo nome da reserva");
-                        res[index].nome = Console.ReadLine();
-                        Console.WriteLine($"Introduza o novo apelido de {res[index].nome}");
-                        res[index].apelido = Console.ReadLine();
+                        reservas[index].nome = Console.ReadLine();
+                        Console.WriteLine($"Introduza o novo apelido de {reservas[index].nome}");
+                        reservas[index].apelido = Console.ReadLine();
 
                     }
                     if (opescolha == 2)
@@ -532,15 +529,15 @@ while ( op != 0 )
                             int novoquart = Convert.ToInt32(Console.ReadLine());
 
 
-                            for (int i = 0; i < res.Length; i++)
+                            for (int i = 0; i < reservas.Length; i++)
                             {
-                                if (novoquart == res[i].Nquarto)
+                                if (novoquart == reservas[i].Nquarto)
                                 {
                                     dispo = false;
                                 }
                             }
                             if (dispo == true)
-                                res[index].Nquarto = novoquart;
+                                reservas[index].Nquarto = novoquart;
                             else
                             {
                                 Console.Clear();
@@ -563,15 +560,15 @@ while ( op != 0 )
                             int novotelemovel = Convert.ToInt32(Console.ReadLine());
 
 
-                            for (int i = 0; i < res.Length; i++)
+                            for (int i = 0; i < reservas.Length; i++)
                             {
-                                if (novotelemovel == res[i].nTele)
+                                if (novotelemovel == reservas[i].nTele)
                                 {
                                     dispo = false;
                                 }
                             }
                             if (dispo == true)
-                                res[index].nTele = novotelemovel;
+                                reservas[index].nTele = novotelemovel;
                             else
                             {
                                 Console.Clear();
@@ -588,7 +585,7 @@ while ( op != 0 )
                     if (opescolha == 4)
                     {
                         Console.WriteLine("Introduza o número de pessoas: ");
-                        res[index].Npessoa = Convert.ToInt32(Console.ReadLine());
+                        reservas[index].Npessoa = Convert.ToInt32(Console.ReadLine());
                     }
                     if (opescolha == 5)
                     {
@@ -613,28 +610,28 @@ while ( op != 0 )
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine();
                         Console.WriteLine("Introduza o novo preço do quarto ");
-                        res[index].preco = Convert.ToInt32(Console.ReadLine());
+                        reservas[index].preco = Convert.ToInt32(Console.ReadLine());
 
                     }
                     if (opescolha == 6)
                     {
                         Console.WriteLine("Introduza um novo nome");
-                        res[index].nome = Console.ReadLine();
+                        reservas[index].nome = Console.ReadLine();
 
                         Console.WriteLine("Introduza um novo apelido");
-                        res[index].apelido = Console.ReadLine();
+                        reservas[index].apelido = Console.ReadLine();
 
                         Console.WriteLine("Introduza um novo número de quarto");
-                        res[index].Nquarto = Convert.ToInt32(Console.ReadLine());
+                        reservas[index].Nquarto = Convert.ToInt32(Console.ReadLine());
 
                         Console.WriteLine("Introduza um novo número de telemovel");
-                        res[index].nTele = Convert.ToInt32(Console.ReadLine());
+                        reservas[index].nTele = Convert.ToInt32(Console.ReadLine());
 
                         Console.WriteLine("Introduza uma nova quantidade de pessoas");
-                        res[index].Npessoa = Convert.ToInt32(Console.ReadLine());
+                        reservas[index].Npessoa = Convert.ToInt32(Console.ReadLine());
 
                         Console.WriteLine("Introduza um novo preço");
-                        res[index].preco = Convert.ToDouble(Console.ReadLine());
+                        reservas[index].preco = Convert.ToDouble(Console.ReadLine());
                     }
 
                     Console.WriteLine("Reserva alterada com sucesso!");
@@ -655,11 +652,11 @@ while ( op != 0 )
 
             Console.WriteLine("Introduza o número do quarto que quer alterar:");
             int n = Convert.ToInt32(Console.ReadLine());
-            int index = pesquisa(res, n);
+            int index = pesquisa(reservas, n);
             if (index != -1)
             {
 
-                Dados(res[index]);
+                Dados(reservas[index]);
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("-------------------------------");
@@ -682,9 +679,9 @@ while ( op != 0 )
                 {
 
                     Console.WriteLine("Introduza o novo nome da reserva");
-                    res[index].nome = Console.ReadLine();
+                    reservas[index].nome = Console.ReadLine();
                     Console.WriteLine("Introduza o novo apelido da reserva");
-                    res[index].apelido = Console.ReadLine();
+                    reservas[index].apelido = Console.ReadLine();
 
                 }
                 if (op == 2)
@@ -697,9 +694,9 @@ while ( op != 0 )
                         int novoquart = Convert.ToInt32(Console.ReadLine());
 
 
-                        for (int i = 0; i < res.Length; i++)
+                        for (int i = 0; i < reservas.Length; i++)
                         {
-                            if (novoquart == res[i].Nquarto)
+                            if (novoquart == reservas[i].Nquarto)
                             {
 
                                 dispo = false;
@@ -707,7 +704,7 @@ while ( op != 0 )
                             }
                         }
                         if (dispo == true)
-                            res[index].Nquarto = novoquart;
+                            reservas[index].Nquarto = novoquart;
                         else
                         {
 
@@ -732,15 +729,15 @@ while ( op != 0 )
                         int novotelemovel = Convert.ToInt32(Console.ReadLine());
 
 
-                        for (int i = 0; i < res.Length; i++)
+                        for (int i = 0; i < reservas.Length; i++)
                         {
-                            if (novotelemovel == res[i].nTele)
+                            if (novotelemovel == reservas[i].nTele)
                             {
                                 dispo = false;
                             }
                         }
                         if (dispo == true)
-                            res[index].nTele = novotelemovel;
+                            reservas[index].nTele = novotelemovel;
                         else
                         {
                             Console.Clear();
@@ -757,7 +754,7 @@ while ( op != 0 )
                 if (op == 4)
                 {
                     Console.WriteLine("Introduza o número de pessoas: ");
-                    res[index].Npessoa = Convert.ToInt32(Console.ReadLine());
+                    reservas[index].Npessoa = Convert.ToInt32(Console.ReadLine());
                 }
                 if (op == 5)
                 {
@@ -782,28 +779,28 @@ while ( op != 0 )
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine();
                     Console.WriteLine("Introduza o novo preço do quarto ");
-                    res[index].preco = Convert.ToInt32(Console.ReadLine());
+                    reservas[index].preco = Convert.ToInt32(Console.ReadLine());
 
                 }
                 if (op == 6)
                 {
                     Console.WriteLine("Introduza um novo nome");
-                    res[index].nome = Console.ReadLine();
+                    reservas[index].nome = Console.ReadLine();
 
                     Console.WriteLine("Introduza um novo apelido");
-                    res[index].apelido = Console.ReadLine();
+                    reservas[index].apelido = Console.ReadLine();
 
                     Console.WriteLine("Introduza um novo número de quarto");
-                    res[index].Nquarto = Convert.ToInt32(Console.ReadLine());
+                    reservas[index].Nquarto = Convert.ToInt32(Console.ReadLine());
 
                     Console.WriteLine("Introduza um novo número de telemovel");
-                    res[index].nTele = Convert.ToInt32(Console.ReadLine());
+                    reservas[index].nTele = Convert.ToInt32(Console.ReadLine());
 
                     Console.WriteLine("Introduza uma nova quantidade de pessoas");
-                    res[index].Npessoa = Convert.ToInt32(Console.ReadLine());
+                    reservas[index].Npessoa = Convert.ToInt32(Console.ReadLine());
 
                     Console.WriteLine("Introduza um novo preço");
-                    res[index].preco = Convert.ToDouble(Console.ReadLine());
+                    reservas[index].preco = Convert.ToDouble(Console.ReadLine());
                 }
 
                 Console.WriteLine("Reserva alterada com sucesso!");
@@ -828,7 +825,7 @@ while ( op != 0 )
 
     if (op == 6)
     {
-        Exportar:
+    Exportar:
         try
         {
             Console.Clear();
@@ -851,8 +848,8 @@ while ( op != 0 )
                 StreamWriter writer = new StreamWriter(export);
                 StreamWriter writer2 = new StreamWriter(import);
 
-                Export(res, writer, c);
-                ExportI(res, writer2, c);
+                Export(reservas, writer, c);
+                ExportI(reservas, writer2, c);
             }
             else
                 Console.WriteLine("Operação cancelada");
@@ -883,7 +880,7 @@ while ( op != 0 )
     gerar:
         try
         {
-            int disp = checkV(res);
+            int disp = checkV(reservas);
             if (disp != -1)
             {
 
@@ -897,19 +894,19 @@ while ( op != 0 )
                 Console.ForegroundColor = ConsoleColor.White;
 
                 int c = rnd.Next(nomes.Length);
-                res[disp].nome = nomes[c];
+                reservas[disp].nome = nomes[c];
                 c = rnd.Next(apelidos.Length);
-                res[disp].apelido = apelidos[c];
+                reservas[disp].apelido = apelidos[c];
 
                 bool sucesso = false;
 
                 while (sucesso == false)
                 {
                     int nquarto = rnd.Next(200, 501);
-                    int confirmacao = pesquisa(res, nquarto);
+                    int confirmacao = pesquisa(reservas, nquarto);
                     if (confirmacao == -1)
                     {
-                        res[disp].Nquarto = nquarto;
+                        reservas[disp].Nquarto = nquarto;
                         sucesso = true;
                     }
                 }
@@ -919,19 +916,19 @@ while ( op != 0 )
                 while (sucesso == false)
                 {
                     int ntel = rnd.Next(900000000, 1000000000);
-                    int confirmacao = pesquisaTel(res, ntel);
+                    int confirmacao = pesquisaTel(reservas, ntel);
 
                     if (confirmacao == -1)
                     {
-                        res[disp].nTele = ntel;
+                        reservas[disp].nTele = ntel;
                         sucesso = true;
                     }
                 }
 
-                res[disp].Npessoa = rnd.Next(1, 5);
+                reservas[disp].Npessoa = rnd.Next(1, 5);
                 c = rnd.Next(precos.Length);
-                res[disp].preco = precos[c];
-                Dados(res[disp]);
+                reservas[disp].preco = precos[c];
+                Dados(reservas[disp]);
 
             }
             else
@@ -976,9 +973,9 @@ while ( op != 0 )
 
             int contar = 0;
 
-            for (int i = 0; i < res.Length; i++)
+            for (int i = 0; i < reservas.Length; i++)
             {
-                if (res[i].Nquarto == 0)
+                if (reservas[i].Nquarto == 0)
                 {
 
                     contar = contar + 1;
@@ -1014,7 +1011,7 @@ while ( op != 0 )
     {
 
         Console.Clear();
-       
+
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine("--------------------------------------------------");
         Console.ForegroundColor = ConsoleColor.Red;
@@ -1039,9 +1036,9 @@ while ( op != 0 )
 
     // Limpar reserva-------------------------------------------------------------------------------------------------
 
-    if(op == 10)
+    if (op == 10)
     {
-        LimparRes:
+    LimparRes:
 
         try
         {
@@ -1056,12 +1053,12 @@ while ( op != 0 )
 
             bool disp = false;
 
-            for (int i = 0; i < res.Length; i++)
+            for (int i = 0; i < reservas.Length; i++)
             {
 
                 disp = true;
-                if (res[i].Nquarto != 0)
-                    Console.Write($"|| {res[i].Nquarto}");
+                if (reservas[i].Nquarto != 0)
+                    Console.Write($"|| {reservas[i].Nquarto}");
             }
             Console.WriteLine();
             if (disp == false)
@@ -1076,17 +1073,17 @@ while ( op != 0 )
                 Console.WriteLine("Introduza o número do quarto de reserva que deseja limpar:");
                 int rsLimpar = Convert.ToInt32(Console.ReadLine());
 
-                int index = pesquisa(res, rsLimpar);
+                int index = pesquisa(reservas, rsLimpar);
 
                 if (index != -1)
                 {
 
-                    res[index].nome = string.Empty;
-                    res[index].apelido = string.Empty;
-                    res[index].nTele = 0;
-                    res[index].preco = 0;
-                    res[index].Npessoa = 0;
-                    res[index].Nquarto = 0;
+                    reservas[index].nome = string.Empty;
+                    reservas[index].apelido = string.Empty;
+                    reservas[index].nTele = 0;
+                    reservas[index].preco = 0;
+                    reservas[index].Npessoa = 0;
+                    reservas[index].Nquarto = 0;
 
                 }
                 else
@@ -1193,7 +1190,7 @@ static int pesquisa(reserva[] a, int n)
         {
             return i;
         }
-        
+
     }
     return -1;
 }
@@ -1281,26 +1278,26 @@ static void ExportI(reserva[] a, StreamWriter writer, int c)
     return;
 }
 
-static void Import (ref reserva res, StreamReader reader)
+static void Import(ref reserva reservas, StreamReader reader)
 {
-    res.nome = reader.ReadLine();
-    res.apelido = reader.ReadLine();
-    res.Nquarto = Convert.ToInt32(reader.ReadLine());
-    res.nTele = Convert.ToInt32(reader.ReadLine());
-    res.Npessoa = Convert.ToInt32(reader.ReadLine());
-    res.preco = Convert.ToDouble(reader.ReadLine());
+    reservas.nome = reader.ReadLine();
+    reservas.apelido = reader.ReadLine();
+    reservas.Nquarto = Convert.ToInt32(reader.ReadLine());
+    reservas.nTele = Convert.ToInt32(reader.ReadLine());
+    reservas.Npessoa = Convert.ToInt32(reader.ReadLine());
+    reservas.preco = Convert.ToDouble(reader.ReadLine());
 
     return;
 }
 
 static int checkV(reserva[] a)
 {
-    for (int i = 0;i < a.Length; i++)
+    for (int i = 0; i < a.Length; i++)
     {
         if (a[i].Nquarto == 0)
         {
             return i;
-        } 
+        }
     }
     return -1;
 }

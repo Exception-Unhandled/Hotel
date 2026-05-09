@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel_trebalho_Grupo", "Hotel_trebalho_Grupo.csproj", "{66ABAB7A-76B4-4B62-BD9C-77B357D82A8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel_trabalho_Grupo", "Hotel_trabalho_Grupo.csproj", "{66ABAB7A-76B4-4B62-BD9C-77B357D82A8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
