@@ -11,13 +11,13 @@ This was aswell my first "big" project on C# collaborating with a colleague.
 - Editing, exporting and generating reservations;
 - A list of available room slots;
 - Checking room prices;
-- Clearing a reservation
+- Clearing a reservation.
 
 Everything on a Command Line Interface (CLI).<br>
 
-Even though I didn't quite use the tools git offers properly, I did have the opportunity to understand the basis of it 
-while having a taste of how to work on a project with others.<br><br>
+Even though I didn't quite use the tools git offers properly since I was still learning, I did have the opportunity 
+to understand the basis of it while having a taste of how to collaborate on a project with others.<br><br>
 
 
 
-This project uses .NET 8.0
+This project was made in C# and uses .NET 8.0.
